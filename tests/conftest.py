@@ -7,7 +7,7 @@ from src.main import app, get_db
 @pytest.fixture
 async def client():
     async with AsyncClient(
-        transport=ASGITransport(app=app, lifespan="on"),
+        transport=ASGITransport(app=app),
         base_url="http://test",
     ) as ac:
         yield ac
