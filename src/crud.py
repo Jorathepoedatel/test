@@ -20,6 +20,7 @@ async def get_recipe(db: AsyncSession, recipe_id: int):
     if recipe:
         recipe.views += 1
         await db.commit()
+        await db.refresh(recipe)
 
     return recipe
 
