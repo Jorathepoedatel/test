@@ -27,7 +27,9 @@ jobs:
 
 
       - name: Run Unittests
-        run: pytest tests
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+          pytest tests
 
       - name: Run Mypy
         run: mypy src/
