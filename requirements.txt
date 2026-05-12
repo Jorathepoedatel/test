@@ -158,3 +158,10 @@ websocket-client==1.9.0
 Werkzeug==3.1.6
 WTForms==3.2.1
 yarl==1.23.0
+black==21.12b0
+flake8==4.0.1
+flake8-bugbear==22.1.11
+flake8-pie==0.15.0
+isort==5.9.3
+mypy==0.931
+pytest==7.0.1

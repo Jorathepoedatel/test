@@ -1,0 +1,39 @@
+image: python:3.7
+
+stages:
+  - build
+  - test
+
+before_script:
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+unittest:
+  stage: test
+  script:
+    - pytest tests
+
+mypy:
+  stage: test
+  script:
+    - mypy src/
+
+black:
+  stage: test
+  script:
+    - black --diff --check src/
+
+isort:
+  stage: test
+  script:
+    - isort --check-only src/
+
+flake8:
+  stage: test
+  script:
+    - flake8 src/
