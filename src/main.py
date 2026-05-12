@@ -3,9 +3,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import  engine, Base, async_session
-import crud
-import schemas
+from src.database import  engine, Base, async_session
+import src.crud as crud
+import src.schemas as schemas
 
 
 async def get_db():
