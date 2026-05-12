@@ -12,15 +12,17 @@ async def get_recipes(db: AsyncSession):
 
 
 async def get_recipe(db: AsyncSession, recipe_id: int):
+    await db.execute(
+        update(Recipe)
+        .where(Recipe.id == recipe_id)
+        .values(views=Recipe.views + 1)
+    )
+    await db.commit()
+
     result = await db.execute(
         select(Recipe).where(Recipe.id == recipe_id)
     )
     recipe = result.scalar_one_or_none()
-
-    if recipe:
-        recipe.views = recipe.views + 1
-        await db.commit()
-        await db.refresh(recipe)
 
     return recipe
 
