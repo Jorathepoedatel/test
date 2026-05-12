@@ -1,39 +1,42 @@
-image: python:3.7
+name: FastAPI CI
 
-stages:
-  - build
-  - test
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
 
-before_script:
-  - pip install --upgrade pip
-  - pip install -r requirements.txt
+jobs:
+  test_and_lint:
+    runs-on: ubuntu-latest
 
-workflow:
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-unittest:
-  stage: test
-  script:
-    - pytest tests
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
 
-mypy:
-  stage: test
-  script:
-    - mypy src/
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest mypy black isort flake8 httpx
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-black:
-  stage: test
-  script:
-    - black --diff --check src/
 
-isort:
-  stage: test
-  script:
-    - isort --check-only src/
+      - name: Run Unittests
+        run: pytest tests
 
-flake8:
-  stage: test
-  script:
-    - flake8 src/
+      - name: Run Mypy
+        run: mypy src/
+
+      - name: Run Black
+        run: black --diff --check src/
+
+      - name: Run Isort
+        run: isort --check-only src/
+
+      - name: Run Flake8
+        run: flake8 src/
