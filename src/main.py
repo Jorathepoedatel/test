@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database import  engine, Base, async_session
+from src.database import engine, Base, async_session
 import src.crud as crud
 import src.schemas as schemas
 
@@ -45,7 +45,7 @@ async def get_recipe(recipe_id: int, db: AsyncSession = Depends(get_db)):
 
 @app.post("/recipes", response_model=schemas.RecipeDetail)
 async def create_recipe(
-        recipe: schemas.RecipeCreate,
-        db: AsyncSession = Depends(get_db),
+    recipe: schemas.RecipeCreate,
+    db: AsyncSession = Depends(get_db),
 ):
     return await crud.create_recipe(db, recipe)

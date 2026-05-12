@@ -5,23 +5,18 @@ from .models import Recipe
 
 async def get_recipes(db: AsyncSession):
     result = await db.execute(
-        select(Recipe)
-        .order_by(Recipe.views.desc(), Recipe.cooking_time.asc())
+        select(Recipe).order_by(Recipe.views.desc(), Recipe.cooking_time.asc())
     )
     return result.scalars().all()
 
 
 async def get_recipe(db: AsyncSession, recipe_id: int):
     await db.execute(
-        update(Recipe)
-        .where(Recipe.id == recipe_id)
-        .values(views=Recipe.views + 1)
+        update(Recipe).where(Recipe.id == recipe_id).values(views=Recipe.views + 1)
     )
     await db.commit()
 
-    result = await db.execute(
-        select(Recipe).where(Recipe.id == recipe_id)
-    )
+    result = await db.execute(select(Recipe).where(Recipe.id == recipe_id))
     recipe = result.scalar_one_or_none()
 
     return recipe
