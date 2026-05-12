@@ -8,7 +8,7 @@ from src.main import app
 @pytest.mark.anyio
 async def test_create_recipe():
     async with AsyncClient(
-            transport=ASGITransport(app=app, lifespan="on"),
+            transport=ASGITransport(app=app),
             base_url="http://test"
     ) as ac:
         response = await ac.post("/recipes", json={
@@ -30,7 +30,7 @@ async def test_create_recipe():
 @pytest.mark.anyio
 async def test_get_recipes():
     async with AsyncClient(
-            transport=ASGITransport(app=app, lifespan="on"),
+            transport=ASGITransport(app=app),
             base_url="http://test"
     ) as ac:
         response = await ac.get("/recipes")
@@ -45,7 +45,7 @@ async def test_get_recipes():
 @pytest.mark.anyio
 async def test_get_recipe_and_increment_views():
     async with AsyncClient(
-            transport=ASGITransport(app=app, lifespan="on"),
+            transport=ASGITransport(app=app),
             base_url="http://test"
     ) as ac:
         create = await ac.post("/recipes", json={
