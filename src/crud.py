@@ -1,6 +1,6 @@
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from models import Recipe
+from .models import Recipe
 
 
 async def get_recipes(db: AsyncSession):
