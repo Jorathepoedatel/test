@@ -1,7 +1,7 @@
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from main import app
+from src.main import app
 
 
 # тест создания рецепта
