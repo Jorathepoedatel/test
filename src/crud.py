@@ -18,7 +18,7 @@ async def get_recipe(db: AsyncSession, recipe_id: int):
     recipe = result.scalar_one_or_none()
 
     if recipe:
-        recipe.views += 1
+        recipe.views = recipe.views + 1
         await db.commit()
         await db.refresh(recipe)
 
