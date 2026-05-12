@@ -1,8 +1,7 @@
 import pytest
 from httpx import AsyncClient, ASGITransport
 
-from main import app
-from src.deps import get_db
+from src.main import app, get_db
 
 
 @pytest.fixture
